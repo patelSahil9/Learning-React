@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import "./app.css";
 import gsap from "gsap";
 
@@ -15,7 +15,7 @@ export default function App() {
       quote: "It's all good. I was amazed at the quality of the Design. We've seen amazing results already.",
     },
     {
-      name: "sahil Patel",
+      name: "Sahil Patel",
       title: "Tech Lead, Google",
       image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       quote: "The rebranding has really helped our business. Definitely worth the investment.",
@@ -28,31 +28,24 @@ export default function App() {
     },
   ];
 
-  const handleNext = () => {
-    const nextIndex = (currentIndex + 1) % Peoples.length;
-    animateTransition(nextIndex);
-    setCurrentIndex(nextIndex);
-  };
-
-  const handlePrev = () => {
-    const prevIndex = (currentIndex - 1 + Peoples.length) % Peoples.length;
-    animateTransition(prevIndex);
-    setCurrentIndex(prevIndex);
-  };
-
-  const animateTransition = (nextIndex) => {
-    imgRefs.current.forEach((img, i) => {
-      gsap.to(img, {
-        scale: i === nextIndex ? 1.3 : 1,
-        duration: 1,
-        ease: "power2.inOut",
-      });
+  useEffect(() => {
+    gsap.to(imgRefs.current[currentIndex], {
+      scale: 1,
+      duration: 1,
+      ease: "power2.inOut",
+      onComplete: () => {
+        gsap.to(imgRefs.current[currentIndex], {
+          scale: 1.4,
+          duration: 1,
+          ease: "power2.inOut",
+        });
+      },
+      
     });
-
     gsap.fromTo(
       circleRef.current,
-      { scale: 0.5 },
-      { scale: 1, duration: 1, ease: "elastic.out(1, 0.3)" }
+      { scale: 0.1 },
+      { scale: 1, duration: 2, ease: "elastic.out(0.8 , 0.3)" }
     );
 
     gsap.fromTo(
@@ -60,6 +53,16 @@ export default function App() {
       { opacity: 0 },
       { opacity: 1, duration: 1,scale: 1, ease: "power2.out" }
     );
+  }, [currentIndex]);
+
+  const handleNext = () => {
+    const nextIndex = (currentIndex + 1) % Peoples.length;
+    setCurrentIndex(nextIndex);
+  };
+
+  const handlePrev = () => {
+    const prevIndex = (currentIndex - 1 + Peoples.length) % Peoples.length;
+    setCurrentIndex(prevIndex);
   };
 
   return (
@@ -74,10 +77,13 @@ export default function App() {
           <div id="sub_img">
             {Peoples.map((person, index) => (
               <img
-                key={index}
+                key={person.name}
                 ref={(el) => (imgRefs.current[index] = el)}
                 src={person.image}
                 alt={person.name}
+                style={{
+                  display: index === currentIndex ? "block" : "none",
+                }}
               />
             ))}
           </div>
