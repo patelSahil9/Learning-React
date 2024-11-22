@@ -1,6 +1,9 @@
 import React, { useRef, useState, useEffect } from "react";
 import "./app.css";
 import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(useGSAP)
 
 export default function App() {
   const imgRefs = useRef([]);
@@ -29,16 +32,23 @@ export default function App() {
   ];
 
   useEffect(() => {
+    gsap.fromTo(
+      imgRefs.current[currentIndex],
+      { scale: 1.3, opacity: 0 },
+      { scale: 1, opacity: 1, duration: 1, ease: "power2.inout" }
+    )
     gsap.to(imgRefs.current[currentIndex], {
       scale: 1,
+      opacity: 1,
       duration: 1,
-      ease: "power2.inOut",
+      ease: "power2.inout",
       onComplete: () => {
         gsap.to(imgRefs.current[currentIndex], {
-          scale: 1.4,
+          scale: 1.3,
           duration: 1,
-          ease: "power2.inOut",
+          ease: "power2.inout",
         });
+        
       },
       
     });
@@ -51,7 +61,7 @@ export default function App() {
     gsap.fromTo(
       "#info",
       { opacity: 0 },
-      { opacity: 1, duration: 1,scale: 1, ease: "power2.out" }
+      { opacity: 1, duration: 1, scale: 1, ease: "power2.out" }
     );
   }, [currentIndex]);
 
@@ -64,7 +74,6 @@ export default function App() {
     const prevIndex = (currentIndex - 1 + Peoples.length) % Peoples.length;
     setCurrentIndex(prevIndex);
   };
-
   return (
     <div id="main">
       <div id="left-btn" onClick={handlePrev}>
