@@ -34,7 +34,7 @@ export default function App() {
   useEffect(() => {
     gsap.fromTo(
       imgRefs.current[currentIndex],
-      { scale: 1.3, opacity: 0 },
+      { scale: 0.5, opacity: 0 },
       { scale: 1, opacity: 1, duration: 1, ease: "power2.inout" }
     )
     gsap.to(imgRefs.current[currentIndex], {
@@ -48,29 +48,100 @@ export default function App() {
           duration: 1,
           ease: "power2.inout",
         });
-        
+
       },
-      
+
     });
     gsap.fromTo(
       circleRef.current,
-      { scale: 0.1 },
-      { scale: 1, duration: 2, ease: "elastic.out(0.8 , 0.3)" }
+      { scale: 0.5 },
+      { scale: 0.8,
+         duration: 2,
+          ease: "elastic.out(0.8 , 0.3)" }
     );
 
-    gsap.fromTo(
-      "#info",
-      { opacity: 0 },
-      { opacity: 1, duration: 1, scale: 1, ease: "power2.out" }
-    );
   }, [currentIndex]);
 
+
   const handleNext = () => {
+    gsap.from(
+      "#image",
+      {
+        x: 100,
+        opacity: 0,
+        duration: 1,
+        ease: "power2.out"
+      }
+    );
+    gsap.to(
+      "#image",
+      {
+        x: 0,
+        opacity: 1,
+        duration: 1,
+        ease: "power2.out"
+      }
+      );
+      
+      gsap.from(
+        "#info",
+        {
+          x: 100,
+          opacity: 0,
+          duration: 1,
+          ease: "power2.out"
+        }
+      );
+      gsap.to(
+        "#info",
+        {
+          x: 0,
+          opacity: 1,
+          duration: 1,
+          ease: "power2.out"
+        }
+        );
     const nextIndex = (currentIndex + 1) % Peoples.length;
     setCurrentIndex(nextIndex);
   };
 
   const handlePrev = () => {
+    gsap.from(
+      "#image",
+      {
+        x: -100,
+        opacity: 0,
+        duration: 1,
+        ease: "power2.out"
+      }
+    );
+    gsap.to(
+      "#image",
+      {
+        x: 0,
+        opacity: 1,
+        duration: 1,
+        ease: "power2.out"
+      }
+      );
+      gsap.from(
+        "#info",
+        {
+          x: -100,
+          opacity: 0,
+          duration: 1,
+          ease: "power2.out"
+        }
+      );
+      gsap.to(
+        "#info",
+        {
+          x: 0,
+          opacity: 1,
+          duration: 1,
+          ease: "power2.out"
+        }
+        );
     const prevIndex = (currentIndex - 1 + Peoples.length) % Peoples.length;
     setCurrentIndex(prevIndex);
   };
