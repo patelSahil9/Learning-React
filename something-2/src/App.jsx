@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState} from "react";
 import "./app.css";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -6,7 +6,7 @@ import { useGSAP } from "@gsap/react";
 gsap.registerPlugin(useGSAP)
 
 export default function App() {
-  const imgRefs = useRef([]);
+  const imgRefs = useRef();
   const circleRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -31,119 +31,60 @@ export default function App() {
     },
   ];
 
-  useEffect(() => {
-    gsap.fromTo(
-      imgRefs.current[currentIndex],
-      { scale: 0.5, opacity: 0 },
-      { scale: 1, opacity: 1, duration: 1, ease: "power2.inout" }
-    )
-    gsap.to(imgRefs.current[currentIndex], {
-      scale: 1,
-      opacity: 1,
-      duration: 1,
-      ease: "power2.inout",
-      onComplete: () => {
-        gsap.to(imgRefs.current[currentIndex], {
-          scale: 1.3,
-          duration: 1,
-          ease: "power2.inout",
+  
+  const handleNext = () => {
+
+    let firstChild = imgRefs.current.firstElementChild;
+    firstChild.style.minWidth = '0%'; 
+
+    setTimeout(() => {
+      imgRefs.current.removeChild(firstChild);  
+      imgRefs.current.appendChild(firstChild);
+      firstChild.style.minWidth = '100%';
+    },1000)
+
+      gsap.fromTo(
+        circleRef.current,
+        { scale: 0.5 },
+        { scale: 1, duration: 2, ease: "elastic.out(0.8 , 0.3)" }
+      );
+       
+      gsap.from("#info",{
+         x:100,
+         opacity: 0, 
+         duration: 1, 
+         ease: "power2.out" 
         });
 
-      },
 
-    });
-    gsap.fromTo(
-      circleRef.current,
-      { scale: 0.5 },
-      { scale: 0.8,
-         duration: 2,
-          ease: "elastic.out(0.8 , 0.3)" }
-    );
-
-  }, [currentIndex]);
-
-
-  const handleNext = () => {
-    gsap.from(
-      "#image",
-      {
-        x: 100,
-        opacity: 0,
-        duration: 1,
-        ease: "power2.out"
-      }
-    );
-    gsap.to(
-      "#image",
-      {
-        x: 0,
-        opacity: 1,
-        duration: 1,
-        ease: "power2.out"
-      }
-      );
-      
-      gsap.from(
-        "#info",
-        {
-          x: 100,
-          opacity: 0,
-          duration: 1,
-          ease: "power2.out"
-        }
-      );
-      gsap.to(
-        "#info",
-        {
-          x: 0,
-          opacity: 1,
-          duration: 1,
-          ease: "power2.out"
-        }
-        );
-    const nextIndex = (currentIndex + 1) % Peoples.length;
-    setCurrentIndex(nextIndex);
+    setCurrentIndex((prev) => (prev + 1) % Peoples.length);
   };
 
   const handlePrev = () => {
-    gsap.from(
-      "#image",
-      {
-        x: -100,
-        opacity: 0,
-        duration: 1,
-        ease: "power2.out"
-      }
+    
+    let lastChild = imgRefs.current.lastElementChild;
+    lastChild.style.minWidth = '0%';
+    imgRefs.current.removeChild(lastChild);
+    imgRefs.current.insertBefore(lastChild, imgRefs.current.firstElementChild);
+    
+    setTimeout(() => {
+      lastChild.style.minWidth = '100%';
+    },1)
+
+    gsap.fromTo(
+      circleRef.current,
+      { scale: 0.5 },
+      { scale: 1, duration: 2, ease: "elastic.out(0.8 , 0.3)" }
     );
-    gsap.to(
-      "#image",
-      {
-        x: 0,
-        opacity: 1,
-        duration: 1,
-        ease: "power2.out"
-      }
-      );
-      gsap.from(
-        "#info",
-        {
-          x: -100,
-          opacity: 0,
-          duration: 1,
-          ease: "power2.out"
-        }
-      );
-      gsap.to(
-        "#info",
-        {
-          x: 0,
-          opacity: 1,
-          duration: 1,
-          ease: "power2.out"
-        }
-        );
-    const prevIndex = (currentIndex - 1 + Peoples.length) % Peoples.length;
-    setCurrentIndex(prevIndex);
+     
+    gsap.from("#info",{
+       x:-100,
+       opacity: 0, 
+       duration: 1, 
+       ease: "power2.out" 
+      });
+
+    setCurrentIndex((prev)=>(prev-1+Peoples.length)%Peoples.length);
   };
   return (
     <div id="main">
@@ -154,17 +95,11 @@ export default function App() {
       <div id="gallery">
         <div id="circle" ref={circleRef}></div>
         <div id="image">
-          <div id="sub_img">
+          <div id="sub_img" ref={imgRefs}>
             {Peoples.map((person, index) => (
-              <img
-                key={person.name}
-                ref={(el) => (imgRefs.current[index] = el)}
-                src={person.image}
-                alt={person.name}
-                style={{
-                  display: index === currentIndex ? "block" : "none",
-                }}
-              />
+              <div key={index} id={'img${index}'} >
+                <img src={person.image} alt="" />
+              </div> 
             ))}
           </div>
         </div>

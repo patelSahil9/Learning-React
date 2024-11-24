@@ -15,9 +15,9 @@
     font-size: 27px;
     padding: 7px;
     transition: 0.5s;
-}
-
-#right-btn{
+  }
+  
+  #right-btn{
     width: 40px;
     height: 40px;
     position: absolute;
@@ -36,18 +36,18 @@
     align-items: center;
     font-size: 27px;
     padding: 7px;
-}
-#right-btn:hover{
+  }
+  #right-btn:hover{
     /* background-color: rgb(0, 179, 255); */
     /* transition-delay: 0s; */
     color:  #4356CF;
-}
-#left-btn:hover{
+  }
+  #left-btn:hover{
     /* background-color: rgb(0, 179, 255); */
     color:  #4356CF;
-}
-
-#main{
+  }
+  
+  #main{
     width: 67%;
     height: 600px;
     margin-left: 14%;
@@ -58,12 +58,12 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-
-
+  
+  
     /* background: linear-gradient(to bottom,rgb(0, 0, 0),rgb(4, 4, 39)); */
-}
-
-#gallery{
+  }
+  
+  #gallery{
     width: 46%;
     height: 100%;
     /* background: red; */
@@ -71,9 +71,9 @@
     flex-direction: row-reverse;
     align-items: center;
     position: relative;
-}
-
-#gallery>#circle{
+  }
+  
+  #gallery>#circle{
     width: 150px;
     height: 150px;
     border-radius: 50%;
@@ -82,32 +82,43 @@
     top: 2%;
     left: 14%;
     
-}
-
-#gallery>#image{
+  }
+  
+  #gallery>#image{
     width: 68%;
     height: 80%;
     /* background-color: cyan; */
     margin-top: 68px;
     z-index: 2;
-}
-
-#gallery>#image>#sub_img{
+  }
+  
+  #gallery>#image>#sub_img{
     width: 100%;
     height: 100%;
-    flex: 1;
+    /* flex: 1; */
     overflow: hidden;
     display: flex;
-    position: relative;
-}
-
-#gallery>#image>#sub_img>img{
+    flex-direction: row;
+  }
+  
+  #gallery>#image>#sub_img>div{
+    min-width: 100%;
+    height: 100%;
+    /* object-fit: cover; */
+    transition: all 1s ease;
+  }
+  
+  #gallery>#image>#sub_img>div>img{
     width: 100%;
     height: 100%;
     object-fit: cover;
-}
-
-#info{
+    transition: all 1s ease;
+  }
+  
+  
+  
+  
+  #info{
     width: 54%;
     height: 100%;
     /* background: green; */
@@ -115,9 +126,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-}
-
-#info>#quote{
+  }
+  
+  #info>#quote{
     width: 90%;
     height: 25%;
     /* background: yellow; */
@@ -133,9 +144,9 @@
     font-size: 20px;
     font-weight: 600;
     line-height: 35px;
-}
-
-#info>#name{
+  }
+  
+  #info>#name{
     width: 90%;
     height: 4%;
     display: flex;
@@ -145,9 +156,9 @@
     position: relative;
     z-index: 2;
     opacity: 0.9;
-}
-
-#info>#title{
+  }
+  
+  #info>#title{
     width: 90%;
     height: 4%;
     display: flex;
@@ -157,4 +168,4 @@
     position: relative;
     z-index: 2;
     opacity: 0.5;
-}
+  }
