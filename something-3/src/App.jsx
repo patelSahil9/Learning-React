@@ -23,6 +23,7 @@ export default function App() {
 
     tl.from("#img1",{
       y: "84%",
+      x: "50%",
       opacity: 0,
       duration: 1.4,
       ease: 'power2.in'
@@ -30,6 +31,7 @@ export default function App() {
 
     tl.from("#img2",{
       y: "-84%",
+      x: "-50%",
       opacity: 0,
       duration: 1.4,
       delay: -1.4,
