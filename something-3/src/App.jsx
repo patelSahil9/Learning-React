@@ -13,7 +13,7 @@ export default function App() {
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: '.main',
-        markers: true,
+        markers: false,
         start: 'top 0%',
         end: 'top -100%',
         scrub: true,
